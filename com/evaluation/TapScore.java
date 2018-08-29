@@ -85,32 +85,40 @@ public class TapScore {
 		while (i>0 || j>0) {
 			// get the index of the minimum number
 			int tb = this.argmin(dim[i][j],dim[i][j+1],dim[i+1][j]); 
+			//System.out.println(dim[i][j]+","+dim[i][j+1]+","+dim[i+1][j]);
 			if (tb == 0) {
 				if ((Mat[i][j])==0) this.CorrectCount++;
 				else this.WrongCount++;
 				j--;
 				i--;
-				if (i==0 && j==0 && Mat[0][0]==0)this.CorrectCount+=1;
+				if (i==0 && j==0) {
+					if (Mat[0][0]==0)this.CorrectCount++;
+					else this.WrongCount++;
+				}
 			}
 			else if (tb == 1) {
-				if (i==correctCount - 1){
-					if ((Mat[i][j])==0) this.CorrectCount++;
-				}
-				i--;
 				this.MissCount++;
-				if (i==0 && j==0 && Mat[0][0]==0)this.CorrectCount+=1;
+				i--;
+				if (i==0 && j==0) {
+					if (Mat[0][0]==0)this.CorrectCount++;
+					else this.MissCount++;
+				}
 			}
 			else {
-				j--;
 				this.SurplusCount++;
-				if (i==0 && j==0 && Mat[0][0]==0)this.CorrectCount+=1;
+				j--;
+				if (i==0 && j==0) {
+					if (Mat[0][0]==0)this.CorrectCount++;
+					else this.SurplusCount++;
+				}
+				
 			}
 		}
 		
 		return 0;
 	}
 	
-	public float getScore() {
+	public float getScoreRate() {
 		float rate = 0.0f;
 		float suplusrate = (float)this.SurplusCount/this.TotalCount;
 		if (suplusrate < 0.1)
@@ -121,6 +129,15 @@ public class TapScore {
 			rate = (float) ((this.CorrectCount - 2.0 * this.SurplusCount)/this.TotalCount);
 		else
 			rate = 0.0f;
+		
+		if (rate < 0.0f) return 0.0f;
+		
+		return rate;
+	}
+	
+	public float getScore() {
+		float rate = getScoreRate();
+		
 		if (rate>0)  return rate * 100;
 		else return 0.0f;
 	}
