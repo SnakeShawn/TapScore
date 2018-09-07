@@ -12,11 +12,27 @@ public class TapScore {
 	private int MissCount = 0;
 	private int SurplusCount = 0;
 	
-	public int execute(int[] answerArr, int[] correctArr) {
-		return execute(answerArr, correctArr, 200);
+	private int[] AnswerArr;
+	private int[] CorrectArr;
+	
+	public void loadData(int[] answerArr, int[] correctArr) {
+		this.AnswerArr = answerArr;
+		this.CorrectArr = correctArr;
 	}
 	
-	public int execute(int[] answerArr, int[] correctArr, int errorRange) {
+	public void reloadData(int[] answerArr, int[] correctArr) {
+		this.AnswerArr = answerArr;
+		this.CorrectArr = correctArr;
+	}
+	
+	public int execute() {
+		return execute(200);
+	}
+	
+	public int execute(int errorRange) {
+		int[] answerArr = this.AnswerArr;
+		int[] correctArr = this.CorrectArr;
+		
 		if(answerArr == null || correctArr == null ||answerArr.length<1||correctArr.length<1) return -1;
 		
 		int correctCount = correctArr.length;
@@ -81,7 +97,8 @@ public class TapScore {
 		if (i==0 && j==0 && Math.abs(correctArr[i]-evalArr[j])<errorRange){
 			this.CorrectCount++;
 		}
-		
+		System.out.println(i);
+		System.out.println(j);
 		while (i>0 || j>0) {
 			// get the index of the minimum number
 			int tb = this.argmin(dim[i][j],dim[i][j+1],dim[i+1][j]); 

@@ -6,13 +6,31 @@ from numpy import array, zeros, inf, argmin
 
 class TapScore:
 
-    __TotalCount = 0
-    __CorrectCount = 0
-    __WrongCount = 0
-    __MissCount = 0
-    __SurplusCount = 0
-    
-    def execute(self, answerArr, correctArr, error = 200):
+    def __init__(self):
+    	self.__TotalCount = 0
+    	self.__CorrectCount = 0
+    	self.__WrongCount = 0
+    	self.__MissCount = 0
+    	self.__SurplusCount = 0
+   
+    def __clearCounts(self):
+    	self.__TotalCount = 0
+    	self.__CorrectCount = 0
+    	self.__WrongCount = 0
+    	self.__MissCount = 0
+    	self.__SurplusCount = 0
+
+    def loadData(self, answerArr, correctArr):
+        self.AnswerArr = answerArr
+        self.CorrectArr = correctArr
+        self.__clearCounts()
+
+    def reloadData(self, answerArr, correctArr):
+        loadData(answerArr, correctArr)
+	
+    def execute(self, error = 200):
+        answerArr = self.AnswerArr
+        correctArr = self.CorrectArr
         if len(answerArr)<1 or len(correctArr)<1 :
             return False
 		
@@ -102,4 +120,19 @@ class TapScore:
             return rate * 100
         else:
             return 0.0
+
+    def getTotalCount(self):
+        return self.__TotalCount
         
+    def getCorrectCount(self):
+        return self.__CorrectCount
+
+    def getWrongCount(self):
+        return self.__WrongCount
+
+    def getMissCount(self):
+        return self.__MissCount
+
+    def getSurplusCount(self):
+        return self.__SurplusCount
+
