@@ -26,7 +26,7 @@ class TapScore:
         self.__clearCounts()
 
     def reloadData(self, answerArr, correctArr):
-        loadData(answerArr, correctArr)
+        self.loadData(answerArr, correctArr)
 	
     def execute(self, error = 200):
         answerArr = self.AnswerArr
@@ -115,7 +115,7 @@ class TapScore:
         return round(rate, 4)
         
     def getScore(self):
-        rate = getScoreRate()
+        rate = self.getScoreRate()
         if rate>0:
             return rate * 100
         else:
