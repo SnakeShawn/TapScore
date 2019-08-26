@@ -1,6 +1,9 @@
+# MacOS:
 .DS_Store
 
-*.pyc
-test.py
-com/test.java
+#python:
+*.py[cod]
 **/__pycache__
+
+#My configuration:
+test.*
